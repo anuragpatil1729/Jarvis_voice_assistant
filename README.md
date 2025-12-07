@@ -1,183 +1,252 @@
-# Jarvis AI - Voice Assistant
+# 🤖 Jarvis AI Assistant
 
-A Python-based voice assistant powered by Google's Gemini AI that can listen to voice commands, perform web searches, open websites, and engage in natural conversations.
+A sophisticated voice-activated AI assistant powered by Google's Gemini 2.5 Flash, designed to help you manage tasks, control your Mac, and interact intelligently with your digital environment.
 
-## Features
+## ✨ Features
 
-- 🎤 **Voice Recognition**: Listens and responds to voice commands
-- 🤖 **AI-Powered Conversations**: Uses Google Gemini 2.5 Flash for intelligent responses
-- 🔍 **Web Search Integration**: Can search the web for real-time information
-- 🌐 **Website Control**: Opens popular websites via voice commands
-- 🕐 **Time Announcements**: Tells you the current time
-- 🧠 **Persistent Memory**: Maintains conversation context (can be cleared on command)
-- 🔊 **Text-to-Speech**: Responds using your system's TTS engine
+### Core Capabilities
+- **Voice & Text Modes**: Switch between voice commands or text input
+- **Gemini AI Integration**: Persistent chat sessions with Google Search capabilities
+- **Password Protection**: Secure access with authentication system
+- **Memory System**: Remember personal information and preferences
+- **Task Management**: Built-in to-do list functionality
 
-## Prerequisites
+### System Control (macOS)
+- **Application Launcher**: Open Chrome, VS Code, Spotify, Notes, Calculator, and more
+- **Volume Control**: Set, mute, or maximize system volume
+- **File Management**: Create folders, list files, delete files on Desktop
+- **Screenshot Capture**: Take and save screenshots instantly
 
-- Python 3.7+
-- macOS (uses `say` command for TTS - can be modified for other OS)
-- Microphone for voice input
+### Productivity Features
+- **Web Navigation**: Quick access to YouTube, Wikipedia, Facebook, Google, GitHub
+- **Alarm System**: Set time-based alarms with natural language
+- **WhatsApp Messaging**: Schedule and send WhatsApp messages (optional)
+- **Time Queries**: Check current time on demand
+
+## 🚀 Installation
+
+### Prerequisites
+- macOS (for system-specific features)
+- Python 3.8 or higher
 - Google Gemini API key
 
-## Installation
+### Required Python Packages
 
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd jarvis-ai
-   ```
+```bash
+pip install google-genai
+pip install SpeechRecognition
+pip install pyaudio
+pip install python-dotenv
+pip install pywhatkit  # Optional, for WhatsApp features
+```
 
-2. **Install required packages**
-   ```bash
-   pip install speechrecognition
-   pip install pyaudio
-   pip install python-dotenv
-   pip install google-genai
-   ```
+### Setup Steps
 
-   **Note**: On macOS, if `pyaudio` installation fails, try:
-   ```bash
-   brew install portaudio
-   pip install pyaudio
-   ```
+1. **Clone or download the project**
+```bash
+cd jarvisAI
+```
 
-3. **Set up your API key**
-   
-   Create a `.env` file in the project root:
-   ```bash
-   touch .env
-   ```
-   
-   Add your Gemini API key to the `.env` file:
-   ```
-   GEMINI_API_KEY=your_api_key_here
-   ```
-   
-   Get your API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. **Create a `.env` file** in the project directory:
+```
+GEMINI_API_KEY=your_gemini_api_key_here
+```
 
-## Usage
+3. **Get your Gemini API Key**:
+   - Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
+   - Create a new API key
+   - Copy it to your `.env` file
 
-Run the assistant:
+4. **Configure the assistant** (optional):
+   - Edit `PASSWORD` in `main.py` to set your own password
+   - Update `WHATSAPP_CONTACTS` with your contacts' phone numbers
+   - Add more apps to the `APPS` dictionary as needed
+
+## 🎯 Usage
+
+### Starting Jarvis
+
 ```bash
 python main.py
 ```
 
-### Voice Commands
+1. Enter the password when prompted (default: `anuragpatil`)
+2. Select mode:
+   - Press `1` for Voice Mode (speak commands)
+   - Press `2` for Text Mode (type commands)
 
-**Website Commands:**
-- "Open YouTube"
-- "Open Wikipedia"
-- "Open Facebook"
-- "Open Google"
+### Example Commands
 
-**Utility Commands:**
-- "What's the time?" / "Tell me the time"
-- "Forget everything" / "Clear memory" - Clears conversation history
-- "Stop" / "Exit" / "Bye" - Exits the program
+#### Basic Interactions
+```
+"Hello Jarvis"
+"What time is it?"
+"Exit" / "Goodbye"
+```
 
-**Conversational:**
-- Ask any question, and Jarvis will use Gemini AI to respond
-- Jarvis can search the web for current information
-- Have multi-turn conversations with context retention
+#### Web Navigation
+```
+"Open YouTube"
+"Open Google"
+"Open GitHub"
+```
 
-## Project Structure
+#### Application Control
+```
+"Open Chrome"
+"Open VS Code"
+"Open Spotify"
+```
+
+#### System Control
+```
+"Set volume to 50"
+"Mute volume"
+"Max volume"
+"Take screenshot"
+```
+
+#### File Management
+```
+"Create folder ProjectFiles"
+"List files"
+"Delete file example.txt"
+```
+
+#### Memory System
+```
+"Remember that my birthday is 15th October"
+"What do you remember?"
+"When is my birthday?"
+```
+
+#### Task Management
+```
+"Add task buy groceries"
+"Show my tasks"
+"Clear tasks"
+```
+
+#### Alarms
+```
+"Set alarm for 7 am"
+"Set alarm for 6:30 pm"
+```
+
+#### WhatsApp Messaging (if configured)
+```
+"Send WhatsApp to Anurag saying Hello, how are you?"
+```
+
+#### AI Conversations
+Ask Jarvis anything! It uses Gemini AI with Google Search:
+```
+"What's the weather today?"
+"Explain quantum computing"
+"What are the latest tech news?"
+```
+
+## 📁 File Structure
 
 ```
-jarvis-ai/
-│
+jarvisAI/
 ├── main.py                 # Main application file
-├── .env                    # API key configuration (create this)
-├── .gitignore             # Git ignore file
+├── jarvis_memory.json      # Stores memories (auto-created)
+├── jarvis_tasks.json       # Stores tasks (auto-created)
+├── .env                    # API keys (create this)
 └── README.md              # This file
 ```
 
-## Configuration
+## 🔒 Security Features
 
-### Customizing Website Shortcuts
+- Password authentication with 3-attempt limit
+- Secure API key storage via environment variables
+- Local data storage (no cloud sync by default)
 
-Edit the `sites` list in `main.py`:
+## ⚙️ Configuration
+
+### Customizing Applications
+
+Edit the `APPS` dictionary in `main.py`:
+
 ```python
-sites = [
-    ["youtube", "https://www.youtube.com"],
-    ["wikipedia", "https://www.wikipedia.com"],
-    # Add more sites here
-    ["github", "https://www.github.com"]
-]
+APPS = {
+    "chrome": "Google Chrome",
+    "vscode": "Visual Studio Code",
+    "yourapp": "Your Application Name",
+}
 ```
 
-### Adjusting Audio Settings
+### Adding WhatsApp Contacts
 
-Modify these parameters in the `takeCommand()` function:
+Edit the `WHATSAPP_CONTACTS` dictionary:
+
 ```python
-r.pause_threshold = 0.8          # Pause detection sensitivity
-audio = r.listen(source, 
-                 timeout=5,       # Max wait time for speech
-                 phrase_time_limit=10)  # Max speech duration
+WHATSAPP_CONTACTS = {
+    "name": "+91XXXXXXXXXX",
+    "friend": "+1XXXXXXXXXX",
+}
 ```
 
-### Changing AI Model
+### Changing Password
 
-Update the model in `main.py`:
+Update the `PASSWORD` variable:
+
 ```python
-GEMINI_MODEL = 'gemini-2.5-flash'  # or 'gemini-pro', etc.
+PASSWORD = "your_new_password"
 ```
 
-## Troubleshooting
+## 🎤 Voice Mode Tips
 
-**Microphone not working:**
-- Check system microphone permissions
-- Ensure no other application is using the microphone
-- Try adjusting ambient noise duration
+- Speak clearly and at a moderate pace
+- Wait for "Listening..." prompt before speaking
+- Minimize background noise for better recognition
+- If recognition fails, the system will wait for the next command
 
-**API errors:**
-- Verify your API key is correct in `.env`
-- Check your internet connection
-- Ensure you haven't exceeded API rate limits
+## 🐛 Troubleshooting
 
-**TTS not working:**
-- On non-macOS systems, replace `os.system(f"say '{safe_text}'")` with platform-specific TTS
-- For Windows: Use `pyttsx3` library
-- For Linux: Use `espeak` or `festival`
+**Speech recognition not working:**
+- Install/reinstall PyAudio: `pip install pyaudio`
+- Check microphone permissions in System Preferences
+- Try text mode if issues persist
 
-## Cross-Platform TTS Alternative
+**Gemini API errors:**
+- Verify your API key in `.env` file
+- Check your API quota at [Google AI Studio](https://aistudio.google.com)
+- Ensure internet connection is stable
 
-For cross-platform support, consider using `pyttsx3`:
+**App launching not working:**
+- Verify exact application names in macOS Applications folder
+- Update `APPS` dictionary with correct names
 
-```bash
-pip install pyttsx3
-```
+## 📝 Notes
 
-Replace the `say()` function:
-```python
-import pyttsx3
+- Memory and task data are stored locally in JSON files
+- Chat history persists until you say "forget everything" or restart
+- WhatsApp messaging requires phone to be connected to internet
+- Some features are macOS-specific (volume control, app launching)
 
-engine = pyttsx3.init()
+## 🤝 Contributing
 
-def say(text):
-    engine.say(text)
-    engine.runAndWait()
-```
+Feel free to customize and extend Jarvis for your needs! Some ideas:
+- Add more application shortcuts
+- Integrate with additional APIs
+- Create custom voice commands
+- Add reminder notifications
+- Implement email functionality
 
-## Security Notes
+## 📜 License
 
-- Never commit your `.env` file to version control
-- Keep your API key confidential
-- Add `.env` to `.gitignore`
+This project is open source and available for personal use and modification.
 
-## Contributing
+## 🙏 Acknowledgments
 
-Feel free to submit issues, fork the repository, and create pull requests for any improvements.
-
-## License
-
-MIT License - feel free to use this project for personal or educational purposes.
-
-## Acknowledgments
-
-- Google Gemini AI for conversational intelligence
-- SpeechRecognition library for voice input
-- Python community for excellent libraries
+- Powered by [Google Gemini AI](https://ai.google.dev/)
+- Speech recognition by Google Speech API
+- Built with Python ❤️
 
 ---
 
-**Made with ❤️ by [Your Name]**
+**Your birthday has been remembered:** October 15th 🎂
+
+Made with 🧠 by your local AI enthusiast
